@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "jotai": "^1.4.9",
     "ky": "^0.28.7",
     "ky-universal": "^0.9.1",
     "next": "12.0.7",
