@@ -9,6 +9,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@headlessui/react": "^1.4.2",
     "jotai": "^1.4.9",
     "ky": "^0.28.7",
     "ky-universal": "^0.9.1",
