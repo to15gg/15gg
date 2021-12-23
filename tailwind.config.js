@@ -5,9 +5,9 @@ module.exports = {
   ],
   theme: {
     colors: {
-      "teal-light": "#B1DED3",
-      teal: "#47C2A4",
-      "teal-dark": "#35AA8D",
+      "teal-400": "#B1DED3",
+      "teal-500": "#47C2A4",
+      "teal-600": "#35AA8D",
       rose: "#E36E6E",
       blue: "6E78D2",
       "almost-white": "#FDFDFD",
