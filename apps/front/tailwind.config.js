@@ -30,6 +30,17 @@ module.exports = {
       // Dim Opacity (Use with color "dim")
       "dim-light": ".75",
       "dim-dark": ".50",
+      rose: "#E36E6E",
+      blue: "6E78D2",
+      "almost-white": "#FDFDFD",
+      "almost-black": "#222222",
+      "gray-100": "#F8F8F8",
+      "gray-200": "#F0F0F0",
+      "gray-300": "#C2C2C2",
+      "gray-400": "#5C5C5C",
+    },
+    fontFamily: {
+      sans: ["Noto Sans", "sans-serif"],
     },
     fontFamily: {
       sans: ["Noto Sans", "sans-serif"],
