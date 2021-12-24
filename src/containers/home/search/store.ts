@@ -20,4 +20,4 @@ export const previewAtom = atomWithQuery((get) => ({
   },
 }));
 export const isOpenAtom = atom(false);
-export const selectedIndexAtom = atom(-1);
+export const highlightedIndexAtom = atom(-1);

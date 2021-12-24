@@ -1,13 +1,14 @@
 import { useAtom } from "jotai";
-import { useAtomValue } from "jotai/utils";
+import { useAtomValue, useUpdateAtom } from "jotai/utils";
 import { useRouter } from "next/router";
 import { AutocompleteList } from "pages/api/autocomplete";
-import { Keys } from "../../../utils/keyboard";
+import { useState } from "react";
+import { Keys } from "utils/keyboard";
 import {
   isOpenAtom,
   keywordAtom,
   previewAtom,
-  selectedIndexAtom,
+  highlightedIndexAtom,
 } from "./store";
 
 const onPaste: React.ClipboardEventHandler<HTMLInputElement> = (event) => {
@@ -51,12 +52,36 @@ const onPaste: React.ClipboardEventHandler<HTMLInputElement> = (event) => {
 
 export default function Input() {
   const items = useAtomValue(previewAtom) as AutocompleteList;
-  const [selectedIndex, setSelectedIndex] = useAtom(selectedIndexAtom);
+  const updateHighlightedIndex = useUpdateAtom(highlightedIndexAtom);
   const [isOpen, setIsOpen] = useAtom(isOpenAtom);
   const [keyword, updateKeyword] = useAtom(keywordAtom);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   const router = useRouter();
 
+  const resetIndex = () => {
+    setSelectedIndex(-1);
+    updateHighlightedIndex(-1);
+  };
+  const open = () => {
+    setIsOpen(true);
+  };
+  const close = () => {
+    setIsOpen(false);
+    resetIndex();
+  };
+
   const lastIndex = items.length - 1;
+  const incrementIndex = () => {
+    const callback = (index: number) => (index !== lastIndex ? index + 1 : 0);
+    setSelectedIndex(callback);
+    updateHighlightedIndex(callback);
+  };
+  const decrementIndex = () => {
+    const callback = (index: number) =>
+      index > 0 ? index - 1 : Math.max(lastIndex, 0);
+    setSelectedIndex(callback);
+    updateHighlightedIndex(callback);
+  };
 
   return (
     <input
@@ -69,12 +94,11 @@ export default function Input() {
       value={items[selectedIndex]?.name ?? keyword}
       onChange={(event) => {
         updateKeyword(event.currentTarget.value);
-        setIsOpen(true);
-        setSelectedIndex(-1);
+        resetIndex();
+        open();
       }}
       onBlur={() => {
-        setIsOpen(false);
-        updateKeyword(items[selectedIndex]?.name ?? keyword);
+        close();
       }}
       onKeyDown={(event) => {
         if (event.nativeEvent.isComposing) {
@@ -83,40 +107,20 @@ export default function Input() {
         switch (event.key) {
           case Keys.ArrowDown:
             event.preventDefault();
-            if (isOpen && items.length > 0) {
-              setSelectedIndex((index) => {
-                console.log(index, index !== lastIndex ? index + 1 : 0);
-
-                return index !== lastIndex ? index + 1 : 0;
-              });
-            } else {
-              if (items.length > 0) {
-                setIsOpen(true);
-                setSelectedIndex(-1);
-              }
-            }
+            isOpen && items.length > 0 ? incrementIndex() : open();
             break;
           case Keys.ArrowUp:
             event.preventDefault();
-            if (isOpen) {
-              setSelectedIndex((index) =>
-                index > 0 ? index - 1 : Math.max(lastIndex, 0)
-              );
-            } else {
-              setIsOpen(true);
-              setSelectedIndex(-1);
-            }
+            isOpen ? decrementIndex() : open();
             break;
           case Keys.Enter:
             event.preventDefault();
-            router.push(`/search/${items[selectedIndex]?.name ?? keyword}`);
-            setIsOpen(false);
+            router.push(`/search/${keyword}`);
+            close();
             break;
-
           case Keys.Escape:
             event.preventDefault();
-            setIsOpen(false);
-            updateKeyword(items[selectedIndex]?.name ?? keyword);
+            close();
             // 메뉴 닫기
             break;
         }
