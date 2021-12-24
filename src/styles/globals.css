@@ -1,12 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+    *:focus-visible {
+        outline: none;
+    }
     html {
         font-size: 8px;
+        line-height: 1;
+    }
+    body {
+        font-size: 2rem;
+        @apply bg-gray-100;
     }
 }
 
+@layer utilities {
+    .teal {
+      @apply bg-teal-500 text-[white];  
+    }
+
+    .center {
+      @apply flex items-center justify-center;
+    }
+  }
