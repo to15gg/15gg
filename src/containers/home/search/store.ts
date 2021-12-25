@@ -1,6 +1,7 @@
 import { atom } from "jotai";
 import { atomWithQuery } from "jotai/query";
 import ky from "ky-universal";
+
 import { AutocompleteList } from "pages/api/autocomplete";
 
 const initialData: AutocompleteList = [];
