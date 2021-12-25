@@ -1,6 +1,11 @@
 {
-  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
+  "extends": ["plugin:import/recommended", "next/core-web-vitals", "plugin:prettier/recommended"],
   "rules": {
-   "@next/next/no-server-import-in-page": "off"
+    "@next/next/no-server-import-in-page": "off",
+    "import/order": ["warn", { 
+      "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+      "newlines-between": "always",
+      "alphabetize": { "order": "asc", "caseInsensitive": true }
+    }]
   }
 }

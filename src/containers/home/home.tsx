@@ -2,6 +2,7 @@ import { useUpdateAtom } from "jotai/utils";
 import Head from "next/head";
 import Image from "next/image";
 import React, { useEffect } from "react";
+
 import Search from "./search";
 import { keywordAtom } from "./search/store";
 

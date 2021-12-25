@@ -2,7 +2,9 @@ import { useAtom } from "jotai";
 import { useAtomValue } from "jotai/utils";
 import Image from "next/image";
 import Link from "next/link";
+
 import { AutocompleteList } from "pages/api/autocomplete";
+
 import { isOpenAtom, previewAtom, highlightedIndexAtom } from "./store";
 
 export default function Autocomplete() {
