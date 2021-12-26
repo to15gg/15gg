@@ -16,15 +16,25 @@ export default function Home() {
   return (
     <div className="center flex-col min-h-screen">
       <Head>
-        <title>Create Next App</title>
+        <title>15GG</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-1 w-full px-[250px]">
-        <div className="center flex-1">
-          <div className="flex flex-1 max-w-[840px] justify-between text-[160px] text-teal-500 font-black">
-            <p>15</p>
-            <p>GG</p>
+      <main className="center flex-1 w-full">
+        <div className="relative center flex-1 max-w-[127.5rem]">
+          <div className="flex flex-1 justify-between">
+            <Image
+              src="/bg_logo_15_210.svg"
+              alt="15"
+              width={210}
+              height={120}
+            />
+            <Image
+              src="/bg_logo_GG_210.svg"
+              alt="GG"
+              width={210}
+              height={120}
+            />
           </div>
           <Search />
         </div>

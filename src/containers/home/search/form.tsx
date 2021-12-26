@@ -15,7 +15,7 @@ export default function Form() {
       className="center flex-1 py-[2rem]"
     >
       <Input />
-      <button type="submit" className="w-[80px] h-[40px] rounded-[5px] teal">
+      <button type="submit" className="w-[9rem] h-[5rem] rounded-[5px] teal">
         검색
       </button>
     </form>

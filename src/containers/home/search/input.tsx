@@ -113,8 +113,8 @@ export default function Input() {
       type="text"
       spellCheck="false"
       autoComplete="off"
-      className="flex-1 bg-transparent"
-      placeholder="Search 15GG"
+      className="flex-1 ml-[1rem] bg-transparent font-light text-almost-black"
+      placeholder="소환사 검색"
       onPaste={onPaste}
       value={items[selectedIndex]?.name ?? keyword}
       onChange={(event) => {
