@@ -7,7 +7,7 @@ import { AutocompleteList } from "pages/api/autocomplete";
 const initialData: AutocompleteList = [];
 
 export const keywordAtom = atom("");
-export const previewAtom = atomWithQuery((get) => ({
+export const autocompleteAtom = atomWithQuery((get) => ({
   enabled: get(keywordAtom).trim() !== "",
   initialData,
   queryKey: ["users", get(keywordAtom)],
@@ -20,5 +20,5 @@ export const previewAtom = atomWithQuery((get) => ({
     return data;
   },
 }));
-export const isOpenAtom = atom(false);
+export const isOpenAutocompleteAtom = atom(false);
 export const highlightedIndexAtom = atom(-1);

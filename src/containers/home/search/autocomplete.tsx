@@ -5,12 +5,16 @@ import Link from "next/link";
 
 import { AutocompleteList } from "pages/api/autocomplete";
 
-import { isOpenAtom, previewAtom, highlightedIndexAtom } from "./store";
+import {
+  isOpenAutocompleteAtom,
+  autocompleteAtom,
+  highlightedIndexAtom,
+} from "./store";
 
 export default function Autocomplete() {
   const [selectedIndex, setSelectedIndex] = useAtom(highlightedIndexAtom);
-  const isOpen = useAtomValue(isOpenAtom);
-  const items = useAtomValue(previewAtom) as AutocompleteList;
+  const isOpen = useAtomValue(isOpenAutocompleteAtom);
+  const items = useAtomValue(autocompleteAtom) as AutocompleteList;
 
   if (!isOpen || items.length === 0) {
     return null;
