@@ -1,9 +1,11 @@
 import { useAtom } from "jotai";
 import { useAtomValue, useUpdateAtom } from "jotai/utils";
 import { useRouter } from "next/router";
-import { AutocompleteList } from "pages/api/autocomplete";
 import { useState } from "react";
+
+import { AutocompleteList } from "pages/api/autocomplete";
 import { Keys } from "utils/keyboard";
+
 import {
   isOpenAtom,
   keywordAtom,

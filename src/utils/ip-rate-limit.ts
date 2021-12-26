@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import upstash from "./upstash";
 
 type Increment = (data: { key: string; timeframe: number }) => Promise<number>;

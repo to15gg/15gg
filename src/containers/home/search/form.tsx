@@ -1,8 +1,9 @@
-import React from "react";
-import { keywordAtom } from "./store";
-import { useRouter } from "next/router";
-import Input from "./input";
 import { useAtomValue } from "jotai/utils";
+import { useRouter } from "next/router";
+import React from "react";
+
+import Input from "./input";
+import { keywordAtom } from "./store";
 
 export default function Form() {
   const keyword = useAtomValue(keywordAtom);
