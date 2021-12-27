@@ -22,7 +22,7 @@ export default function Autocomplete() {
 
   return (
     <div className="relative border-t-[1px] border-t-[#D9D9D9] ">
-      <p className="absolute top-[1rem] right-0 text-[10px]">
+      <p className="absolute top-[1rem] right-0 text-[10px] font-medium">
         화살표 키로 검색 결과를 이동할 수 있습니다.
       </p>
       <ul className="space-y-[1.5rem] py-[2.5rem]">
