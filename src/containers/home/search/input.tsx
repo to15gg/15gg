@@ -1,18 +1,21 @@
-import { useAtom } from "jotai";
 import { useAtomValue, useUpdateAtom } from "jotai/utils";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useDebounce } from "rooks";
 
-import { useDebounce } from "hooks";
 import { AutocompleteList } from "pages/api/autocomplete";
 import { Keys } from "utils/keyboard";
 
-import {
-  isOpenAutocompleteAtom,
-  keywordAtom,
-  autocompleteAtom,
-  highlightedIndexAtom,
-} from "./store";
+import { useIsOpenAutocomplete, useSelectedIndex } from "./hooks";
+import { keywordAtom, autocompleteAtom } from "./store";
+
+type Actions = {
+  [Keys.ArrowDown]: () => void;
+  [Keys.ArrowUp]: () => void;
+  [Keys.Enter]: () => void;
+  [Keys.Escape]: () => void;
+  [key: string]: (() => void) | undefined;
+};
 
 const onPaste: React.ClipboardEventHandler<HTMLInputElement> = (event) => {
   event.preventDefault();
@@ -56,56 +59,23 @@ const onPaste: React.ClipboardEventHandler<HTMLInputElement> = (event) => {
 export default function Input() {
   const router = useRouter();
   const [keyword, updateKeyword] = useState("");
-  const searchKeyword = useDebounce(keyword, 150);
-  const updateSearchKeyword = useUpdateAtom(keywordAtom);
-  const [selectedIndex, setSelectedIndex] = useState(-1);
-  const updateHighlightedIndex = useUpdateAtom(highlightedIndexAtom);
+  const updateSearchKeyword = useDebounce(useUpdateAtom(keywordAtom), 150);
+  const { selectedIndex, increment, decrement, reset } = useSelectedIndex();
+  const { isOpen, open, close } = useIsOpenAutocomplete();
   const items = useAtomValue(autocompleteAtom) as AutocompleteList;
-  const [isOpenAutocomplete, setIsOpenAutocomplete] = useAtom(
-    isOpenAutocompleteAtom
-  );
 
   useEffect(() => {
-    updateSearchKeyword(searchKeyword);
-  }, [searchKeyword, updateSearchKeyword]);
+    updateSearchKeyword(keyword);
+  }, [keyword, updateSearchKeyword]);
 
-  const lastIndex = items.length - 1;
-  const incrementIndex = () => {
-    const callback = (index: number) => (index < lastIndex ? index + 1 : 0);
-    setSelectedIndex(callback);
-    updateHighlightedIndex(callback);
-  };
-  const decrementIndex = () => {
-    const callback = (index: number) =>
-      index > 0 ? index - 1 : Math.max(lastIndex, 0);
-    setSelectedIndex(callback);
-    updateHighlightedIndex(callback);
-  };
-  const resetIndex = () => {
-    setSelectedIndex(-1);
-    updateHighlightedIndex(-1);
-  };
-
-  const openAutocomplete = () => {
-    setIsOpenAutocomplete(true);
-  };
-  const closeAutocomplete = () => {
-    setIsOpenAutocomplete(false);
-    resetIndex();
-  };
-
-  const actions = {
-    [Keys.ArrowDown]: () =>
-      isOpenAutocomplete ? incrementIndex() : openAutocomplete(),
-    [Keys.ArrowUp]: () =>
-      isOpenAutocomplete ? decrementIndex() : openAutocomplete(),
+  const actions: Actions = {
+    [Keys.ArrowDown]: isOpen ? increment : open,
+    [Keys.ArrowUp]: isOpen ? decrement : open,
     [Keys.Enter]: () => {
       router.push(`/search/${keyword}`);
-      closeAutocomplete();
+      close();
     },
-    [Keys.Escape]: () => {
-      closeAutocomplete();
-    },
+    [Keys.Escape]: close,
   };
 
   return (
@@ -115,26 +85,23 @@ export default function Input() {
       autoComplete="off"
       className="flex-1 ml-[1rem] bg-transparent font-light text-almost-black"
       placeholder="소환사 검색"
-      onPaste={onPaste}
       value={items[selectedIndex]?.name ?? keyword}
+      onPaste={onPaste}
       onChange={(event) => {
         updateKeyword(event.currentTarget.value);
-        resetIndex();
-        openAutocomplete();
+        reset();
+        open();
       }}
-      onBlur={closeAutocomplete}
+      onFocus={open}
+      onBlur={(event) => updateKeyword(event.currentTarget.value)}
       onKeyDown={(event) => {
-        if (event.nativeEvent.isComposing) {
-          return;
-        }
+        if (!event.nativeEvent.isComposing) {
+          const action = actions[event.key];
 
-        switch (event.key) {
-          case Keys.ArrowDown:
-          case Keys.ArrowUp:
-          case Keys.Enter:
-          case Keys.Escape:
+          if (action !== undefined) {
             event.preventDefault();
-            actions[event.key]();
+            action();
+          }
         }
       }}
     />
