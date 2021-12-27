@@ -11,9 +11,5 @@ export default function Home() {
     return () => updateKeyword("");
   });
 
-  return (
-    <div className="center flex-1">
-      <Search />
-    </div>
-  );
+  return <Search />;
 }
