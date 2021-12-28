@@ -23,11 +23,10 @@ const onPaste: React.ClipboardEventHandler<HTMLInputElement> = (event) => {
 
   const pastedData = event.clipboardData.getData("text/plain");
 
-  const summonerNames = pastedData
-    .split(/\n/)
-    .map((line) =>
-      line.replace(patterns.find((pattern) => line.match(pattern)) ?? "", "$1")
-    );
+  const summonerNames = pastedData.split(/\n/).map((line) => {
+    const pattern = patterns.find((pattern) => line.match(pattern));
+    return pattern !== undefined ? line.replace(pattern, "$1") : line;
+  });
 
   const newText =
     summonerNames.length === 0
