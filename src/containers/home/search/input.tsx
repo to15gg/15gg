@@ -9,13 +9,8 @@ import { Keys } from "utils/keyboard";
 import { useIsOpenAutocomplete, useSelectedIndex } from "./hooks";
 import { keywordAtom, autocompleteAtom } from "./store";
 
-type Actions = {
-  [Keys.ArrowDown]: () => void;
-  [Keys.ArrowUp]: () => void;
-  [Keys.Enter]: () => void;
-  [Keys.Escape]: () => void;
-  [key: string]: (() => void) | undefined;
-};
+type Action = () => void;
+type Actions = Record<string, Action | undefined>;
 
 const onPaste: React.ClipboardEventHandler<HTMLInputElement> = (event) => {
   event.preventDefault();
