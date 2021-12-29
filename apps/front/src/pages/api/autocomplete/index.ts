@@ -1,4 +1,4 @@
-import ky from "ky";
+import ky from "ky-universal";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type OPGGAutocompleteResponse = {
