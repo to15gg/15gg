@@ -8,7 +8,10 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
+    "publish": "turbo run publish",
     "lint": "turbo run lint",
+    "prisma:generate": "turbo run prisma:generate",
+    "prisma:push": "turbo run prisma:push",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
     "prepare": "husky install"
   },
@@ -22,6 +25,12 @@
   },
   "turbo": {
     "pipeline": {
+      "prisma:generate": {
+        "outputs": []
+      },
+      "prisma:push": {
+        "outputs": []
+      },
       "build": {
         "dependsOn": [
           "^build"
@@ -35,6 +44,7 @@
         "outputs": []
       },
       "dev": {
+        "dependsOn": ["^build", "^dev"],
         "cache": false
       }
     }
