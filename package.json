@@ -44,12 +44,18 @@
         "outputs": []
       },
       "dev": {
-        "dependsOn": ["^build", "^dev"],
+        "dependsOn": [
+          "^build",
+          "^dev"
+        ],
         "cache": false
       }
     }
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": "eslint --cache --fix"
+  },
+  "dependencies": {
+    "classnames": "^2.3.1"
   }
 }
