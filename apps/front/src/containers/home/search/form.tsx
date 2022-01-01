@@ -17,7 +17,7 @@ export default function Form() {
       <Input />
       <button
         type="submit"
-        className="w-[9rem] h-[5rem] rounded-[5px] teal disabled:bg-gray-300 disabled:text-gray-700"
+        className="w-[9rem] h-[5rem] pt-2 rounded-[5px] teal disabled:bg-gray-300 disabled:text-gray-700"
         disabled={keyword.trim() === ""}
       >
         검색
