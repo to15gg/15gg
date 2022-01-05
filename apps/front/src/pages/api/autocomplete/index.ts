@@ -1,27 +1,6 @@
-import ky from "ky-universal";
+import { type AutocompleteList, getAutoCompleteList } from "lib/autocomplete";
 import type { NextApiRequest, NextApiResponse } from "next";
-
-type OPGGAutocompleteResponse = {
-  sections: {
-    groups: {
-      type: string;
-      items: {
-        level: number;
-        name: string;
-        profileIconUrl: string;
-        tierRank: { tierRank: string; lp: number };
-      }[];
-    }[];
-  }[];
-};
-
-export type AutocompleteList = {
-  level: number;
-  name: string;
-  profileIconUrl: string;
-  tierRank: string | null;
-  lp: number | null;
-}[];
+import { prisma } from "utils/prisma";
 
 export default async function handler(
   req: NextApiRequest,
@@ -29,35 +8,36 @@ export default async function handler(
 ) {
   const keyword = req.query.keyword as string;
 
-  const { sections } = await ky(
-    `https://www.op.gg/ajax/autocomplete.json/keyword=${encodeURI(keyword)}`
-  ).json<OPGGAutocompleteResponse>();
-  const data = sections
-    .map(({ groups }) =>
-      groups
-        .filter((group) => group.type === "SUMMONER")
-        .map(({ items }) =>
-          items.map(
-            ({
-              level,
-              name,
-              profileIconUrl,
-              tierRank: { tierRank, lp } = {
-                tierRank: null,
-                lp: null,
-              },
-            }) => ({
-              level,
-              name,
-              profileIconUrl,
-              tierRank,
-              lp,
-            })
-          )
-        )
-        .flat()
-    )
-    .flat();
+  const data = await getAutoCompleteList(keyword);
 
-  res.status(200).json(data);
+  if (data.length === 0) return;
+
+  const names = data.map(({ name }) => name);
+
+  const summoners = await prisma.summoner.findMany({
+    where: {
+      name: { in: names },
+      leagues: { some: { queueType: "RANKED_SOLO_5x5" } },
+    },
+    include: {
+      leagues: true,
+    },
+  });
+
+  const result: AutocompleteList = data.map((item) => {
+    const summoner = summoners.find((summoner) => summoner.name === item.name);
+
+    if (summoner !== undefined && summoner.leagues.length > 0) {
+      const { wins, losses } = summoner.leagues[0];
+      const total = wins + losses;
+      return {
+        ...item,
+        winningPercentage: ((wins / total) * 100).toFixed(2),
+      };
+    } else {
+      return item;
+    }
+  });
+
+  return res.json(result);
 }

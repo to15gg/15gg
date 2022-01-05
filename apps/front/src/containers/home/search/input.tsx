@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDebounce } from "rooks";
 
-import { AutocompleteList } from "pages/api/autocomplete";
+import type { AutocompleteList } from "lib/autocomplete";
 import { Keys } from "utils/keyboard";
 
 import { useIsOpenAutocomplete, useSelectedIndex } from "./hooks";
@@ -77,7 +77,7 @@ export default function Input() {
       type="text"
       spellCheck="false"
       autoComplete="off"
-      className="flex-1 ml-[1rem] bg-transparent font-light text-almost-black"
+      className="flex-1 h-[9rem] pl-[2rem] py-[2rem] bg-transparent font-light text-almost-black"
       placeholder="소환사 검색"
       value={items[selectedIndex]?.name ?? keyword}
       onPaste={onPaste}

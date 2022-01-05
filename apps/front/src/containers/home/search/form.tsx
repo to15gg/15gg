@@ -12,7 +12,7 @@ export default function Form() {
   return (
     <form
       onSubmit={() => router.push(`/search/${keyword}`)}
-      className="center flex-1 py-[2rem]"
+      className="center flex-1"
     >
       <Input />
       <button
