@@ -31,3 +31,5 @@ npm-debug.log*
 # typescript
 *.tsbuildinfo
 .eslintcache
+
+.prisma

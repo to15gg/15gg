@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { useAtomValue } from "jotai/utils";
-import Image from "next/image";
+import Image from "components/image";
 import Link from "next/link";
 
 import { AutocompleteList } from "pages/api/autocomplete";
