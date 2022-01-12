@@ -1,6 +1,6 @@
 import { useAtomValue, useUpdateAtom } from "jotai/utils";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDebounce } from "rooks";
 
 import type { AutocompleteList } from "lib/autocomplete";
@@ -52,11 +52,16 @@ const onPaste: React.ClipboardEventHandler<HTMLInputElement> = (event) => {
 
 export default function Input() {
   const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
   const [keyword, updateKeyword] = useState("");
   const updateSearchKeyword = useDebounce(useUpdateAtom(keywordAtom), 150);
   const { selectedIndex, increment, decrement, reset } = useSelectedIndex();
   const { isOpen, open, close } = useIsOpenAutocomplete();
   const items = useAtomValue(autocompleteAtom) as AutocompleteList;
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  });
 
   useEffect(() => {
     updateSearchKeyword(keyword);
@@ -74,6 +79,7 @@ export default function Input() {
 
   return (
     <input
+      ref={inputRef}
       type="text"
       spellCheck="false"
       autoComplete="off"
