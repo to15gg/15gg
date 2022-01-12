@@ -6,17 +6,16 @@
     "packages/*"
   ],
   "scripts": {
+    "start": "turbo run start",
     "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
-    "publish": "turbo run publish",
+    "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "prisma:generate": "turbo run prisma:generate",
-    "prisma:push": "turbo run prisma:push",
+    "test": "turbo run test",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
     "prepare": "husky install"
   },
   "devDependencies": {
-    "eslint": "^8.5.0",
+    "eslint": "^7.32.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.1.3",
     "postcss": "^8.4.5",
@@ -24,13 +23,10 @@
     "turbo": "latest"
   },
   "turbo": {
+    "npmClient": "npm",
     "pipeline": {
-      "prisma:generate": {
-        "outputs": []
-      },
-      "prisma:push": {
-        "outputs": []
-      },
+      "start": {},
+      "lint": {},
       "build": {
         "dependsOn": [
           "^build"
@@ -40,20 +36,16 @@
           ".next/**"
         ]
       },
-      "lint": {
-        "outputs": []
-      },
       "dev": {
         "dependsOn": [
-          "^build",
-          "^dev"
+          "^build"
         ],
         "cache": false
       }
     }
   },
   "lint-staged": {
-    "*.{js,ts,jsx,tsx}": "eslint --cache --fix"
+    "*.{js,ts,jsx,tsx}": "eslint --cache --fix -c packages/eslint-preset-15gg/.eslintrc.js"
   },
   "dependencies": {
     "classnames": "^2.3.1"

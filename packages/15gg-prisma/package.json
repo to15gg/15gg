@@ -1,0 +1,32 @@
+{
+  "name": "@15gg/prisma",
+  "private": true,
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    ".prisma",
+    "index.js",
+    "index.d.ts",
+    "edge.js",
+    "edge.d.ts"
+  ],
+  "scripts": {
+    "prisma:generate": "cross-env-shell \"prisma generate\"",
+    "prisma:watch": "cross-env-shell \"prisma generate --watch\"",
+    "generate:normal": "OUTPUT_PATH='../../../node_modules/.prisma/client' npm run prisma:generate",
+    "generate:proxy": "OUTPUT_PATH='../../../node_modules/.prisma/edge' PRISMA_CLIENT_ENGINE_TYPE=dataproxy npm run prisma:generate",
+    "watch:normal": "OUTPUT_PATH='../../../node_modules/.prisma/client' npm run prisma:watch",
+    "watch:proxy": "OUTPUT_PATH='../../../node_modules/.prisma/edge' PRISMA_CLIENT_ENGINE_TYPE=dataproxy npm run prisma:watch",
+    "dev": "concurrently \"npm:watch:normal\" \"npm:watch:proxy\"",
+    "build": "concurrently \"npm:generate:normal\" \"npm:generate:proxy\""
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0",
+    "cross-env": "^7.0.3",
+    "dotenv-cli": "^4.1.1",
+    "prisma": "^3.7.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^3.7.0"
+  }
+}

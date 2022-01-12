@@ -12,9 +12,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
-    "jsx": "preserve",
-    "rootDir": "src"
-  },
-  "include": ["src", "next-env.d.ts"],
-  "exclude": ["node_modules"]
+    "jsx": "preserve"
+  }
 }
