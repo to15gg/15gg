@@ -39,8 +39,7 @@
       "dev": {
         "dependsOn": [
           "@15gg/prisma#build"
-        ],
-        "cache": false
+        ]
       }
     }
   },
