@@ -3,7 +3,7 @@ import { useAtomValue } from "jotai/utils";
 import Image from "next/image";
 import Link from "next/link";
 
-import { AutocompleteList } from "pages/api/autocomplete";
+import type { AutocompleteList } from "lib/autocomplete";
 
 import {
   isOpenAutocompleteAtom,

@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 import { useAtomCallback, useAtomValue, useUpdateAtom } from "jotai/utils";
 import { useCallback, useState } from "react";
 
-import { AutocompleteList } from "pages/api/autocomplete";
+import type { AutocompleteList } from "lib/autocomplete";
 
 import {
   autocompleteAtom,

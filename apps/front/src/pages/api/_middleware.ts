@@ -1,10 +1,10 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import { IS_PRODUCTION, IS_USING_RATE_LIMIT } from "utils";
 import ipRateLimit from "utils/ip-rate-limit";
 
-export async function middleware(req: NextRequest) {
-  if (IS_PRODUCTION && IS_USING_RATE_LIMIT) {
-    return await ipRateLimit(req);
-  }
-}
+export const middleware = async (req: NextRequest) => {
+  return IS_PRODUCTION && IS_USING_RATE_LIMIT
+    ? await ipRateLimit(req)
+    : NextResponse.next();
+};

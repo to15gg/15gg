@@ -1,9 +1,9 @@
 import { useAtomValue, useUpdateAtom } from "jotai/utils";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDebounce } from "rooks";
 
-import { AutocompleteList } from "pages/api/autocomplete";
+import type { AutocompleteList } from "lib/autocomplete";
 import { Keys } from "utils/keyboard";
 
 import { useIsOpenAutocomplete, useSelectedIndex } from "./hooks";
@@ -52,11 +52,16 @@ const onPaste: React.ClipboardEventHandler<HTMLInputElement> = (event) => {
 
 export default function Input() {
   const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
   const [keyword, updateKeyword] = useState("");
   const updateSearchKeyword = useDebounce(useUpdateAtom(keywordAtom), 150);
   const { selectedIndex, increment, decrement, reset } = useSelectedIndex();
   const { isOpen, open, close } = useIsOpenAutocomplete();
   const items = useAtomValue(autocompleteAtom) as AutocompleteList;
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  });
 
   useEffect(() => {
     updateSearchKeyword(keyword);
@@ -74,10 +79,11 @@ export default function Input() {
 
   return (
     <input
+      ref={inputRef}
       type="text"
       spellCheck="false"
       autoComplete="off"
-      className="flex-1 ml-[1rem] bg-transparent font-light text-almost-black"
+      className="flex-1 h-[9rem] pl-[2rem] py-[2rem] bg-transparent font-light text-almost-black"
       placeholder="소환사 검색"
       value={items[selectedIndex]?.name ?? keyword}
       onPaste={onPaste}

@@ -11,14 +11,14 @@
     "edge.d.ts"
   ],
   "scripts": {
-    "prisma:generate": "cross-env-shell \"prisma generate\"",
-    "prisma:watch": "cross-env-shell \"prisma generate --watch\"",
-    "generate:normal": "OUTPUT_PATH='../../../node_modules/.prisma/client' npm run prisma:generate",
-    "generate:proxy": "OUTPUT_PATH='../../../node_modules/.prisma/edge' PRISMA_CLIENT_ENGINE_TYPE=dataproxy npm run prisma:generate",
-    "watch:normal": "OUTPUT_PATH='../../../node_modules/.prisma/client' npm run prisma:watch",
-    "watch:proxy": "OUTPUT_PATH='../../../node_modules/.prisma/edge' PRISMA_CLIENT_ENGINE_TYPE=dataproxy npm run prisma:watch",
-    "dev": "concurrently \"npm:watch:normal\" \"npm:watch:proxy\"",
-    "build": "concurrently \"npm:generate:normal\" \"npm:generate:proxy\""
+    "prisma:build": "cross-env-shell \"prisma generate\"",
+    "prisma:dev": "cross-env-shell \"prisma generate --watch\"",
+    "build:normal": "OUTPUT_PATH='../../../node_modules/.prisma/client' npm run prisma:build",
+    "build:proxy": "OUTPUT_PATH='../../../node_modules/.prisma/edge' PRISMA_CLIENT_ENGINE_TYPE=dataproxy npm run prisma:build",
+    "dev:normal": "OUTPUT_PATH='../../../node_modules/.prisma/client' npm run prisma:dev",
+    "dev:proxy": "OUTPUT_PATH='../../../node_modules/.prisma/edge' PRISMA_CLIENT_ENGINE_TYPE=dataproxy npm run prisma:dev",
+    "build": "concurrently \"npm:build:normal\" \"npm:build:proxy\"",
+    "dev": "concurrently \"npm:dev:normal\" \"npm:dev:proxy\""
   },
   "devDependencies": {
     "concurrently": "^7.0.0",
