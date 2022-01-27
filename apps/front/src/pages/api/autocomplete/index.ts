@@ -10,7 +10,7 @@ export default async function handler(
 
   const data = await getAutoCompleteList(keyword);
 
-  if (data.length === 0) return;
+  if (data.length === 0) return res.json([]);
 
   const names = data.map(({ name }) => name);
 
