@@ -3,7 +3,6 @@ import { IS_DEVELOPMENT } from "utils";
 
 declare global {
   var prismaEdge: PrismaClient | undefined;
-  var count: number;
 }
 
 export * from "@15gg/prisma/edge";

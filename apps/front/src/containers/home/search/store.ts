@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 import { atomWithQuery } from "jotai/query";
-import ky from "ky-universal";
+import ky from "ky";
 
 import type { AutocompleteList } from "lib/autocomplete";
 
