@@ -37,7 +37,7 @@ export async function getAutoCompleteList(keyword: string) {
         .filter((group) => group.type === "SUMMONER")
         .map(({ items }) =>
           items
-            .filter(({ name }) => name.replaceAll(" ", "").length > 1)
+            .filter(({ name }) => (name ?? "").replaceAll(" ", "").length > 1)
             .map(
               ({
                 level,
