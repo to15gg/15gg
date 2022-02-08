@@ -14,11 +14,13 @@ export const prismaEdge =
     log: ["error", "warn"],
   });
 
-if (IS_DEVELOPMENT) global.prismaEdge = prismaEdge;
+if (IS_DEVELOPMENT) {
+  global.prismaEdge = prismaEdge;
 
-globalThis["fetch"] = global["fetch"];
-globalThis["Headers"] = global["Headers"];
-globalThis["Request"] = global["Request"];
-globalThis["FormData"] = global["FormData"];
-globalThis["Response"] = global["Response"];
-globalThis["AbortController"] = global["AbortController"];
+  globalThis["fetch"] ??= global["fetch"];
+  globalThis["Headers"] ??= global["Headers"];
+  globalThis["Request"] ??= global["Request"];
+  globalThis["FormData"] ??= global["FormData"];
+  globalThis["Response"] ??= global["Response"];
+  globalThis["AbortController"] ??= global["AbortController"];
+}
