@@ -1,4 +1,5 @@
 import ky from "ky";
+import "utils/polyfills/string/replace-all";
 
 type OPGGAutocompleteResponse = {
   sections: {
@@ -38,8 +39,6 @@ export async function getAutoCompleteList(keyword: string) {
         .map(({ items }) =>
           items
             .filter(({ name }) => {
-              console.log("name", name, typeof name, name.replaceAll);
-
               return name.replaceAll(" ", "").length > 1;
             })
             .map(
