@@ -38,7 +38,7 @@ export async function getAutoCompleteList(keyword: string) {
         .map(({ items }) =>
           items
             .filter(({ name }) => {
-              console.log(name);
+              console.log("name", name, typeof name, name.replaceAll);
 
               return name.replaceAll(" ", "").length > 1;
             })
