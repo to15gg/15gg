@@ -12,10 +12,9 @@ export const autocompleteAtom = atomWithQuery((get) => ({
   initialData,
   queryKey: ["users", get(keywordAtom)],
   queryFn: async ({ queryKey: [, keyword] }) => {
-    const data = await ky(
-      `${window.location.protocol}//${window.location.host}/api/autocomplete`,
-      { searchParams: { keyword: keyword as string } }
-    ).json<AutocompleteList>();
+    const data = await ky(`/api/autocomplete`, {
+      searchParams: { keyword: keyword as string },
+    }).json<AutocompleteList>();
 
     return data;
   },
