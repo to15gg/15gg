@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 import { atomWithQuery } from "jotai/query";
-import ky from "ky-universal";
+import ky from "ky";
 
 import type { AutocompleteList } from "lib/autocomplete";
 
@@ -12,10 +12,9 @@ export const autocompleteAtom = atomWithQuery((get) => ({
   initialData,
   queryKey: ["users", get(keywordAtom)],
   queryFn: async ({ queryKey: [, keyword] }) => {
-    const data = await ky(
-      `${window.location.protocol}//${window.location.host}/api/autocomplete`,
-      { searchParams: { keyword: keyword as string } }
-    ).json<AutocompleteList>();
+    const data = await ky(`/api/autocomplete`, {
+      searchParams: { keyword: keyword as string },
+    }).json<AutocompleteList>();
 
     return data;
   },

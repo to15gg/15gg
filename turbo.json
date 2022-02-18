@@ -1,0 +1,22 @@
+{
+  "npmClient": "npm",
+  "pipeline": {
+    "start": {},
+    "lint": {},
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        ".next/**"
+      ]
+    },
+    "dev": {
+      "cache": false,
+      "dependsOn": [
+        "@15gg/prisma#build"
+      ]
+    }
+  }
+}

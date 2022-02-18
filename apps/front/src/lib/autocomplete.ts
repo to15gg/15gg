@@ -1,4 +1,5 @@
 import ky from "ky";
+import "utils/polyfills/string/replace-all";
 
 type OPGGAutocompleteResponse = {
   sections: {

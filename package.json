@@ -22,31 +22,7 @@
     "prettier": "^2.5.1",
     "turbo": "latest"
   },
-  "turbo": {
-    "npmClient": "npm",
-    "pipeline": {
-      "start": {},
-      "lint": {},
-      "build": {
-        "dependsOn": [
-          "^build"
-        ],
-        "outputs": [
-          "dist/**",
-          ".next/**"
-        ]
-      },
-      "dev": {
-        "dependsOn": [
-          "@15gg/prisma#build"
-        ]
-      }
-    }
-  },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": "eslint --cache --fix -c packages/eslint-preset-15gg/.eslintrc.js"
-  },
-  "dependencies": {
-    "classnames": "^2.3.1"
   }
 }

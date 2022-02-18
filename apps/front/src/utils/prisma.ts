@@ -18,10 +18,3 @@ export const prisma =
   });
 
 if (IS_DEVELOPMENT) global.prisma = prisma;
-
-globalThis["fetch"] = global["fetch"];
-globalThis["Headers"] = global["Headers"];
-globalThis["Request"] = global["Request"];
-globalThis["FormData"] = global["FormData"];
-globalThis["Response"] = global["Response"];
-globalThis["AbortController"] = global["AbortController"];
